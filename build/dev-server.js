@@ -21,8 +21,42 @@ var autoOpenBrowser = !!config.dev.autoOpenBrowser
 // Define HTTP proxies to your custom API backend
 // https://github.com/chimurai/http-proxy-middleware
 var proxyTable = config.dev.proxyTable
-
 var app = express()
+// 添加接口数据
+var appData = require('../data.json')
+var seller = appData.seller
+var goods = appData.goods
+var ratings = appData.ratings
+
+var apiRoutes = express.Router()
+
+apiRoutes.get('/goods', (req, res) => {
+  res.json({
+    errnor: 0,
+    data: goods
+  })
+})
+apiRoutes.get('/seller', (req, res) => {
+  res.json({
+    errnor: 0,
+    data: seller
+  })
+})
+apiRoutes.get('/ratings', (req, res) => {
+  res.json({
+    errnor: 0,
+    data: ratings
+  })
+})
+apiRoutes.get('/seller', (req, res) => {
+  res.json({
+    errnor: 0,
+    data: seller
+  })
+})
+
+app.use('/api', apiRoutes)
+
 var compiler = webpack(webpackConfig)
 
 var devMiddleware = require('webpack-dev-middleware')(compiler, {
