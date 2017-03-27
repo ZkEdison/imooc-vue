@@ -12,8 +12,9 @@
           <router-link to="/ratings">评论</router-link>
       </div>
     </div>
-    <div class="content"></div>
-    <router-view></router-view>
+    <div class="main-content">
+      <router-view></router-view>
+    </div>
   </div>
 </template>
 
@@ -65,4 +66,10 @@ export default {
         color: rgb(77,85,93)
         &.active
           color: rgb(240,20,20)
+  .main-content
+    position: absolute
+    top: 174px
+    bottom: 48px
+    left: 0
+    right: 0
 </style>

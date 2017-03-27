@@ -13,13 +13,17 @@
         </div>
       </div>
       <div class="support-count" v-if="seller.supports">
-        <span class="count">{{seller.supports.length}}
-        </span>
-        <i class="icon-keyboard_arrow_right">
-        </i>
+        <span class="count">{{seller.supports.length}}</span>
+        <i class="icon-keyboard_arrow_right"></i>
       </div>
     </div>
-    <div class="bulletin-wrapper"></div>
+    <div class="bulletin-wrapper">
+      {{seller.bulletin}}
+      <i class="icon-keyboard_arrow_right"></i>
+    </div>
+    <div class="background-header">
+      <img :src="seller.avatar">
+    </div>
   </div>
 </template>
 
@@ -43,6 +47,6 @@ export default {
 </script>
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
-<style lang="stylus" rel="stylesheet/stylus">
+<style lang="stylus" rel="stylesheet/stylus" scoped>
   @import './header.styl'
 </style>

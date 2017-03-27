@@ -11,6 +11,6 @@ border-1px($color)
 		content: ''
 
 bg-image($url)
-	background-image: url($url + "@2x.png")
+	background-image: url( "./images/" + $url + "@2x.png")
 	@media (-webkit-min-divice-pixel-ratio:3),(min-divice-pixel-ratio:3)
-		background-image: url($url + "@3x.png")
+		background-image: url("./images/" + $url + "@3x.png")

@@ -1,6 +1,6 @@
 <template>
-  <div>
-    <h1>header</h1>
+  <div class="goods">
+   	
   </div>
 </template>
 
@@ -15,6 +15,6 @@ export default {
 </script>
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
-<style scoped>
-
+<style lang="stylus" rel="stylesheet/stylus" scoped>
+		@import "./goods.styl"
 </style>
