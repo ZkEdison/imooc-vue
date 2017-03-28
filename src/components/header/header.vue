@@ -36,13 +36,14 @@
       <div class="detail-close">
           <i class="icon-close"></i>
       </div>
-      
     </div>
+    <image-scale :preImageSrc="preImageSrc"></image-scale>
   </div>
 </template>
 
 <script>
 import star from './../star/star.vue'
+import imageScale from './../imageScale/imageScale.vue'
 
 export default {
   name: 'header',
@@ -54,11 +55,13 @@ export default {
   data () {
     return {
       classMap: [],
-      detailShow: false
+      detailShow: false,
+      preImageSrc: ''
     }
   },
   created () {
     this.classMap = ['decrease', 'discount', 'guarantee', 'invoice', 'special']
+    this.preImageSrc = 'http://static.galileo.xiaojukeji.com/static/tms/seller_avatar_256px.jpg'
   },
   methods: {
     showDetail () {
@@ -66,7 +69,8 @@ export default {
     }
   },
   components: {
-    'star': star
+    'star': star,
+    'imageScale': imageScale
   }
 }
 </script>

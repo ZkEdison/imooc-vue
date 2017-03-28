@@ -33,10 +33,8 @@ export default {
   created () {
     this.$http.get('/api/seller')
           .then((res) => {
-            console.log(res)
             if (res.data.errnor === ERR_OK) {
               this.seller = res.data.data
-              console.log(res.data.data)
             }
           })
           .catch((error) => {
