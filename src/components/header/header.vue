@@ -26,18 +26,40 @@
         <img :src="seller.avatar">
       </div>
     </div>
-    <div class="detail" v-if="detailShow">
-      <div class="detail-wrapper">
-        <div class="detail-main">
-          <h1 class="name">{{seller.name}}</h1>
-          <star :size="48" :score="seller.score"></star>
+    <transition name="fade">
+      <div class="detail" v-if="detailShow">
+        <div class="detail-wrapper">
+          <div class="detail-main">
+            <h1 class="name">{{seller.name}}</h1>
+            <star :size="48" :score="seller.score"></star>
+            <div class="title">
+              <div class="line"></div>
+              <div class="text">youhuixinxi</div>
+              <div class="line"></div>
+            </div>
+            <ul v-if="seller.supports" class="supports">
+              <li class="support-item" v-for="item in seller.supports" >
+                <span :class="classMap[item.type]" class="icon"></span>
+                <span class="text">{{item.description}}</span>
+              </li>
+            </ul>
+            <div class="title">
+              <div class="line"></div>
+              <div class="text">common report</div>
+              <div class="line"></div>
+            </div>
+            <div class="bulletin">
+              <p>{{seller.bulletin}}</p>
+            </div>
+          </div>
+        </div>
+        <div class="detail-close" @click="detailShow = false">
+            <i class="icon-close"></i>
         </div>
       </div>
-      <div class="detail-close">
-          <i class="icon-close"></i>
-      </div>
-    </div>
-    <image-scale :preImageSrc="preImageSrc"></image-scale>
+    </transition>  
+    
+    <!-- <image-scale :preImageSrc="preImageSrc"></image-scale> -->
   </div>
 </template>
 

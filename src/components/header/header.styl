@@ -42,13 +42,13 @@
 					background-repeat: no-repeat
 					&.decrease
 						bg-image('decrease_1')
-					&.decrease
+					&.discount
 						bg-image('discount_1')
-					&.decrease
+					&.guarantee
 						bg-image('guarantee_1')
-					&.decrease
+					&.invoice
 						bg-image('invoice_1')
-					&.decrease
+					&.special
 						bg-image('special_1')
 				.text
 					font-size: 10px
@@ -120,6 +120,12 @@
 	display: flex
 	flex-flow: column
 	font-size:0
+	&.fade-enter , &.fade-leave-active
+		opacity: 0
+		background: rgba(7,17,27,0)
+	&.fade-enter-active , &.fade-leave-active
+		transition: all .3s
+		background: rgba(7,17,27,0.8)
 	.detail-wrapper
 		flex:1
 		color: #fff
@@ -131,6 +137,57 @@
 				text-align:center
 				font-size:16px
 				font-weight: 700
+				margin-bottom: 16px
+			.title
+				width: 80%
+				margin: 30px auto 24px auto
+				display:flex
+				.line
+					flex:1
+					position:relative
+					top:-6px
+					border-bottom: 1px solid rgb(255,255,255,0.2)
+				.text
+					font-size: 14px
+					padding: 0 12px
+			.supports
+				width: 80%
+				margin: 0 auto
+				.support-item
+					padding: 0 12px
+					margin-bottom:12px
+					font-size:0
+					&.last-child
+						margin-bottom: 0
+					.icon
+						display: inline-block
+						width:16px
+						height: 16px
+						vertical-align: top
+						margin-right:6px
+						background-size: 16px 16px
+						background-repeat:no-repeat
+						&.decrease
+							bg-image('decrease_2')
+						&.discount
+							bg-image('discount_2')
+						&.guarantee
+							bg-image('guarantee_2')
+						&.invoice
+							bg-image('invoice_2')
+						&.special
+							bg-image('special_2')
+					.text
+						font-size: 12px
+						color:rgb(255,255,255)
+						line-height: 16px
+			.bulletin
+				margin: 0 auto
+				width: 80%
+				p 
+					padding: 0 12px	
+					line-height: 24px
+					font-size: 12px			
 	.detail-close
 		padding: 16px
 		text-align: center
