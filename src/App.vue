@@ -67,7 +67,7 @@ export default {
   .main-content
     position: absolute
     top: 174px
-    bottom: 48px
+    bottom: 0
     left: 0
     right: 0
 </style>
