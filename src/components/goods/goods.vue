@@ -1,10 +1,11 @@
 <template>
   <div class="goods">
   	<!-- left -->
-   	<div class="menu-wrapper">
+   	<div class="menu-wrapper" ref="menuWrapper">
    		<ul class="list">
-   			<li v-for="item in goods" class="menu-item border-1px" >
-   				
+   			<li v-for="(item,index) in goods" class="menu-item border-1px"
+   			:class="{'current': index === currentIndex }"
+   			@click="selectMenu(index, $event)">
    				<span class="text">
    					<span v-show="item.type >= 0" class=icon :class="classMap[item.type]"></span>
    					{{item.name}}
@@ -13,11 +14,11 @@
    		</ul>
    	</div>
    	<!-- right -->
-   	<div class="foods-wrapper">
+   	<div class="foods-wrapper" ref="foodsWrapper">
    		<ul>
-   			<li v-for="item in goods">
+   			<li v-for="(item,index) in goods"  ref="foodList">
    				<h1 class="title">
-   					{{item.name}}
+   					{{index}}{{item.name}}
    				</h1>
    				<div v-for="food in item.foods"
    					class="food-item border-1px">
@@ -31,8 +32,10 @@
    							{{food.description}}
    						</p>
    						<div class="extra">
-   							<span class="count">yueshou {{food.sellCount}} &nbsp;
-   							haoping {{food.rating}}</span>
+   							<span class="count">yueshou {{food.sellCount}} 
+   							&nbsp;
+   							haoping {{food.rating}}
+   							</span>
    						</div>
    						<div class="price">
    							<span class="now">
@@ -51,12 +54,16 @@
 </template>
 
 <script>
+import BScroll from 'better-scroll'
+
 const ERR_OK = 0
 export default {
   name: 'goods',
   data () {
     return {
-      goods: {}
+      goods: {},
+      listHeight: [],
+      scrollY: 0
     }
   },
   created () {
@@ -64,12 +71,80 @@ export default {
      .then((res) => {
        if (res.data.errnor === ERR_OK) {
          this.goods = res.data.data
+         this.$nextTick(() => {
+         	this._initScroll()
+         	this._calculateHeight()
+         })
        }
      })
      .catch((error) => {
        console.log(error)
      })
     this.classMap = ['decrease', 'discount', 'guarantee', 'invoice', 'special']
+  },
+  watch: {
+  },
+  methods: {
+ 		_initScroll	() {
+ 			// console.log(this.$refs)
+ 			// console.log(this.$refs.menuWrapper)
+ 			this.munuScroll = new BScroll(this.$refs.menuWrapper, {
+ 				click: true
+ 			})
+ 			this.foodsScroll = new BScroll(this.$refs.foodsWrapper, {
+ 				probeType: 3
+ 			})
+ 			this.foodsScroll.on('scroll', (pos) => {
+ 				this.scrollY = Math.abs(Math.round(pos.y))
+  		})
+ 		},
+ 		_calculateHeight () {
+ 			let foodList = this.$refs.foodList
+ 			console.log(foodList)
+ 			let height = 0
+ 			this.listHeight.push(height)
+ 			if (foodList) {
+ 				for (let i = 0; i < foodList.length; i++) {
+ 				let item = foodList[i]
+ 				height += item.clientHeight
+ 				this.listHeight.push(height)
+ 				}
+ 			}
+ 		},
+ 		selectMenu (index, event) {
+ 			console.log('click')
+ 			if (!event._constructed) {
+ 				return
+ 			}
+ 			let foodList = this.$refs.foodList
+ 			let el = foodList[index]
+ 			this.foodsScroll.scrollToElement(el, 100)
+ 			console.log(index)
+ 		}
+  },
+  computed: {
+  	currentIndex: function () {
+    		for (let i = 0; i < this.listHeight.length; i++) {
+  				let height1 = this.listHeight[i]
+  				let height2 = this.listHeight[i + 1]
+  				if (!height2 || (this.scrollY >= height1 && this.scrollY < height2)) {
+  					console.log(i)
+  					return i
+  				}
+  			}
+  			return 0
+  	}
+  	// currentIndex: function () {
+   //  	for (let i = 0; i < this.listHeight.length; i++) {
+   //    	let height1 = this.listHeight[i]
+   //     	let height2 = this.listHeight[i + 1]
+   //    	if (!height2 || (this.scrollY >= height1 && this.scrollY < height2)) {
+   //      	console.log(i)
+   //      	return i
+   //    	}
+   //  	}
+   //    	return 0
+   // 	}
   }
 }
 </script>

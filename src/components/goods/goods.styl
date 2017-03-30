@@ -11,14 +11,19 @@
 		width:80px
 		background:#f3f5f7
 		.list
-			overflow-y:auto
-			max-height:100%
+			overflow: hidden
 			.menu-item
 				margin: 0 auto
 				display:table
 				height: 54px
 				width: 56px
 				line-height: 14px
+				&.current
+					position: relative
+					margin-top: border-1px
+					font-weight: 700
+					color:red
+					background-color: #fff
 				.icon
 					display: inline-block
 					vertical-align: top
@@ -40,12 +45,13 @@
 				.text
 					display: table-cell
 					vertical-align: middle
+					text-align: center
 					font-size: 12px
 					border-1px(rgba(7,17,27,0.1))
 	.foods-wrapper
 		flex: 1
 		max-height:100%
-		overflow-y:auto
+		overflow:hidden
 		.title
 			padding-left: 14px
 			height: 26px
