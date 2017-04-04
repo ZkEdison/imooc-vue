@@ -32,7 +32,7 @@
    							{{food.description}}
    						</p>
    						<div class="extra">
-   							<span class="count">yueshou {{food.sellCount}} 
+   							<span class="count">yueshou {{food.sellCount}}
    							&nbsp;
    							haoping {{food.rating}}
    							</span>
@@ -45,23 +45,38 @@
    								{{food.oldPrice}}
    							</span>
    						</div>
+              <div class="cartcontrol-wrapper">
+                <cartcontrol :food="food" @addCart="addCart"></cartcontrol>
+              </div>
    					</div>
    				</div>
    			</li>
    		</ul>
    	</div>
+   	<shopcart :deliveryPrice="seller.deliveryPrice" :minPrice="seller.minPrice" :selectFoods="selectFoods"></shopcart>
   </div>
 </template>
 
 <script>
 import BScroll from 'better-scroll'
+import shopcart from '../shopcart/shopcart'
+import cartcontrol from './../cartcontr/cartcontrol'
 
 const ERR_OK = 0
 export default {
   name: 'goods',
+  props: {
+  	seller: {
+  		type: Object
+  	}
+  },
+  components: {
+  	shopcart,
+    cartcontrol
+  },
   data () {
     return {
-      goods: {},
+      goods: [],
       listHeight: [],
       scrollY: 0
     }
@@ -92,7 +107,7 @@ export default {
  				click: true
  			})
  			this.foodsScroll = new BScroll(this.$refs.foodsWrapper, {
- 				probeType: 3
+ 				probeType: 3, click: true
  			})
  			this.foodsScroll.on('scroll', (pos) => {
  				this.scrollY = Math.abs(Math.round(pos.y))
@@ -120,7 +135,10 @@ export default {
  			let el = foodList[index]
  			this.foodsScroll.scrollToElement(el, 100)
  			console.log(index)
- 		}
+ 		},
+    addCart () {
+      console.log('触发福组件')
+    }
   },
   computed: {
   	currentIndex: function () {
@@ -133,7 +151,19 @@ export default {
   				}
   			}
   			return 0
-  	}
+  	},
+    selectFoods () {
+      let foods = []
+      this.goods.forEach((good) => {
+        good.foods.forEach(() => {
+          if (good.count) {
+            foods.push(good)
+          }
+        })
+      })
+      console.log(foods)
+      return foods
+    }
   	// currentIndex: function () {
    //  	for (let i = 0; i < this.listHeight.length; i++) {
    //    	let height1 = this.listHeight[i]
