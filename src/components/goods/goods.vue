@@ -53,7 +53,7 @@
    			</li>
    		</ul>
    	</div>
-   	<shopcart :deliveryPrice="seller.deliveryPrice" :minPrice="seller.minPrice" :selectFoods="selectFoods"></shopcart>
+   	<shopcart ref="shopCartElement" :deliveryPrice="seller.deliveryPrice" :minPrice="seller.minPrice" :selectFoods="selectFoods"></shopcart>
   </div>
 </template>
 
@@ -136,8 +136,14 @@ export default {
  			this.foodsScroll.scrollToElement(el, 100)
  			console.log(index)
  		},
-    addCart () {
-      console.log('触发福组件')
+    _drop (target) {
+      this.$refs.shopCartElement.drop(target)
+    },
+    addCart (target) {
+      if (!event._constructed) {
+        return
+      }
+      this._drop(target)
     }
   },
   computed: {
@@ -146,7 +152,6 @@ export default {
   				let height1 = this.listHeight[i]
   				let height2 = this.listHeight[i + 1]
   				if (!height2 || (this.scrollY >= height1 && this.scrollY < height2)) {
-  					console.log(i)
   					return i
   				}
   			}
@@ -155,13 +160,12 @@ export default {
     selectFoods () {
       let foods = []
       this.goods.forEach((good) => {
-        good.foods.forEach(() => {
+        good.foods.forEach((good) => {
           if (good.count) {
             foods.push(good)
           }
         })
       })
-      console.log(foods)
       return foods
     }
   	// currentIndex: function () {

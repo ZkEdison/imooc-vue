@@ -20,6 +20,15 @@
    			<div class="pay" :class="payClass">{{payDesc}}</div>
    		</div>
    	</div>
+    <div class="ball-container">
+      <div v-for="ball in balls">
+        <transition name="drop">
+          <div class="ball" v-show="ball.show">
+            <div class="inner" ref="inner"></div>
+          </div>
+        </transition>
+      </div>
+    </div>
   </div>
 </template>
 
@@ -36,14 +45,47 @@ export default {
     selectFoods: {
       type: Array,
       default () {
-        return [
-          {price: 8, count: 2}
-        ]
+        return
       }
     }
   },
   data () {
     return {
+      balls: [
+        {
+          show: false
+        },
+        {
+          show: false
+        },
+        {
+          show: false
+        },
+        {
+          show: false
+        },
+        {
+          show: false
+        },
+        {
+          show: false
+        }
+      ],
+      dropBalls: []
+    }
+  },
+  methods: {
+    drop (el) {
+      console.log(el)
+      for (let i = 0; i < this.balls.length; i++) {
+        let ball = this.ball[i]
+        if (!ball.show) {
+          ball.show = true
+          ball.el = el
+          this.dropBalls.push(ball)
+          return
+        }
+      }
     }
   },
   computed: {
@@ -81,7 +123,7 @@ export default {
 </script>
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
-<style scoped lang="stylus" rel="stylesheet/stylus">
+<style lang="stylus" rel="stylesheet/stylus">
 	.shopcart
 		position: fixed
 		left: 0
@@ -159,11 +201,11 @@ export default {
 				height: 48px
 				background: #333
 				.pay
-					line-height: 48px
+				  line-height: 48px
 					font-size: 14px
 					text-align: center
 					color: rgba(255, 255, 255, 0.4)
-					&.enouth
-						background: #00b34c
-						color: #fff
+				  &.enouth
+					 background: #00b34c
+					 color: #fff
 </style>
