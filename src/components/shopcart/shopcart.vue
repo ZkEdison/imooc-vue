@@ -1,6 +1,6 @@
 <template>
   <div class="shopcart">
-   	<div class="content">
+   	<div class="content" @click.stop.prevent="toggleList">
    		<div class="content-left">
    			<!-- icon -->
    			<div class="logo-wrapper">
@@ -32,12 +32,39 @@
         </transition>
       </div>
     </div>
+    <transition  name="fold">
+      <div class="shopcart-list" v-show="listShow">
+          <div class="list-header">
+            <h1 class="title">ShopCar</h1>
+            <span class="empty">Clear</span>
+          </div>
+          <div class="list-content" ref="listContent">
+            <ul class="">
+              <li class="food" v-for = "food in selectFoods">
+                <span class="name">{{food.name}}</span>
+                <div class="price">
+                  <span class="">${{food.price*food.count}}</span>
+                </div>
+                <div class="cartcontrol-wrapper">
+                  <cartcontrol :food="food"></cartcontrol>
+                </div>
+              </li>
+            </ul>
+          </div>
+      </div>
+    </transition >
   </div>
 </template>
 
 <script>
+import cartcontrol from './../cartcontr/cartcontrol'
+import BScroll from 'better-scroll'
+
 export default {
   name: 'shopcart',
+  components: {
+    cartcontrol
+  },
   props: {
     deliveryPrice: {
       type: Number,
@@ -54,6 +81,7 @@ export default {
   },
   data () {
     return {
+      fold: true,
       balls: [
         {
           show: false
@@ -79,7 +107,7 @@ export default {
   },
   methods: {
     drop (el) {
-      console.log(el)
+      // console.log(el)
       for (let i = 0; i < this.balls.length; i++) {
         let ball = this.balls[i]
         if (!ball.show) {
@@ -133,6 +161,13 @@ export default {
         ball.show = false
         el.style.display = 'none'
       }
+    },
+    toggleList () {
+      if (!this.totalCount) {
+          return
+      }
+      this.fold = !this.fold
+      console.log(`this.fold:${this.fold}`)
     }
   },
   computed: {
@@ -164,6 +199,25 @@ export default {
       if (this.totalPrice >= this.minPrice) {
         return 'enouth'
       }
+    },
+    listShow () {
+      if (!this.totalCount) {
+           this.fold = true
+           return false
+      }
+      let show = !this.fold
+      if (show) {
+        this.$nextTick(() => {
+          if (!this.scroll) {
+            this.scroll = new BScroll(this.$refs.listContent, {
+              click: true
+            })
+          } else {
+            this.scroll.refresh()
+          }
+        })
+      }
+      return show
     }
   }
 }
@@ -176,7 +230,7 @@ export default {
     position: fixed
     left: 0
     bottom: 0
-    z-index: 50
+    z-index: 501
     width: 100%
     height: 48px
     .content

@@ -11,3 +11,51 @@
       border-radius: 50%
       background-color: rgb(0, 160, 220)
       transition: all .4s linear
+.shopcart-list
+  position: absolute
+  top: 0
+  left: 0
+  z-index: -1
+  width: 100%
+  transform: translate3d(0, -100%, 0)
+  &.fold-enter-active, &.fold-leave-active
+    transition: all .5s
+  &.fold-enter, &.fold-leave-active
+    transform: translate3d(0, 0, 0)
+  .list-header
+    height: 40px
+    line-height: 40px
+    background-color: #f3f5f7
+    border-bottom: 2px solid rgba(7, 17, 27, .1)
+    .title
+      float: left
+      font-size: 14px
+      color:rgb(7, 17, 27)
+      padding: 0 18px
+    .empty
+      float: right
+      font-size: 12px
+      color: rgb(0, 160 , 220)
+      padding: 0 18px
+  .list-content
+    max-height: 217px
+    padding: 0 18px
+    overflow: hidden
+    background-color: #fff
+    .food
+      height: 48px
+      line-height: 48px
+      text-align: right
+      box-sizing: border-box
+      border-bottom: 1px solid rgba(7, 17, 27, .1)
+      .name
+        float: left
+        font-size: 14px
+        color:rgb(7, 17, 27)
+      .price
+        display: inline-block
+        font-size: 14px
+        font-weight: 700
+      .cartcontrol-wrapper
+        display: inline-block
+        vertical-align: sub
