@@ -59,3 +59,15 @@
       .cartcontrol-wrapper
         display: inline-block
         vertical-align: sub
+.list-mask
+  position: fixed
+  top: 0
+  left: 0
+  right: 0
+  bottom: 0
+  z-index: -2
+  background-color: rgba(7, 17, 27, .6)
+  &.fade-enter-active, &.fade-leave-active
+    transition: all .5s
+  &.fade-enter, &.fade-leave-active
+    opacity: 0

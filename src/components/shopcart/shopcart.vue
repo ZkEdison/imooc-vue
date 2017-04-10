@@ -16,7 +16,7 @@
         <!-- desc -->
         <div class="desc">另需配送费￥{{deliveryPrice}} 元</div>
    		</div>
-   		<div class="content-right">
+   		<div class="content-right" @click.stop.prevent="pay">
    			<div class="pay" :class="payClass">{{payDesc}}</div>
    		</div>
    	</div>
@@ -36,7 +36,7 @@
       <div class="shopcart-list" v-show="listShow">
           <div class="list-header">
             <h1 class="title">ShopCar</h1>
-            <span class="empty">Clear</span>
+            <span class="empty" @click="empty">Clear</span>
           </div>
           <div class="list-content" ref="listContent">
             <ul class="">
@@ -53,6 +53,12 @@
           </div>
       </div>
     </transition >
+    <transition name='fade'>
+      <div class="list-mask" v-show="listShow" @click="hideList">
+
+      </div>
+    </transition>
+
   </div>
 </template>
 
@@ -168,6 +174,20 @@ export default {
       }
       this.fold = !this.fold
       console.log(`this.fold:${this.fold}`)
+    },
+    empty () {
+      this.selectFoods.forEach((food) => {
+        food.count = 0
+      })
+    },
+    hideList () {
+      this.fold = !this.fold
+    },
+    pay () {
+      if (this.totalPrice < this.minPrice) {
+        return
+      }
+      window.alert('pay' + this.totalPrice)
     }
   },
   computed: {
