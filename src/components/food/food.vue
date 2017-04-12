@@ -1,6 +1,6 @@
 <template lang="html">
   <transition name="move">
-    <div v-show = "showFlag" class="food" ref="food">
+    <div v-show = "showFlag" class="food-detail" ref="food">
       <div>
         <div class="image-header">
           <img :src="food.image" alt="">
@@ -19,7 +19,7 @@
             <span class="old" v-show="food.oldPrice">${{food.oldPrice}}</span>
           </div>
           <div class="cartcontrol-wrapper">
-            <cartcontrol :food='food'></cartcontrol>
+            <cartcontrol :food='food' @addCart="addCart"></cartcontrol>
           </div>
           <transition name="fade">
             <div class="buy" v-show="!food.count || food.count === 0" @click="addFirst">
@@ -93,6 +93,9 @@ export default {
       console.log(event.target)
       this.$emit('addCart', event.target)
       Vue.set(this.food, 'count', 1)
+    },
+    addCart () {
+      this.$emit('addCart', event.target)
     }
   }
 }
@@ -100,7 +103,7 @@ export default {
 
 <style lang="stylus" rel="stylesheet/stylus">
 
-  .food
+  .food-detail
     position:fixed
     left: 0
     top: 0

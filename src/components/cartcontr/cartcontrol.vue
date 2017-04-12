@@ -22,18 +22,18 @@
     },
     methods: {
       addCart (event) {
-        console.log('start click')
+        console.log('cartcontrol 点击')
         // if (!event._constructed) {
         //   return
         // }
         if (this.food.count === undefined) {
-          console.log('count--undefined')
+          console.log('当不存在count的时候，添加count并赋值为1')
           Vue.set(this.food, 'count', 1)
         } else {
           this.food.count++
-          this.$emit('addCart', event.target)
         }
-        console.log('button' + this.food.count)
+        console.log('触发自定义addCart事件')
+        this.$emit('addCart', event.target)
       },
       decreaseCart (event) {
         // if (!event._constructed) {

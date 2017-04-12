@@ -113,7 +113,8 @@ export default {
   },
   methods: {
     drop (el) {
-      // console.log(el)
+      console.log('shopcart 组件传递进来的' + el)
+      console.log(el)
       for (let i = 0; i < this.balls.length; i++) {
         let ball = this.balls[i]
         if (!ball.show) {
@@ -121,13 +122,14 @@ export default {
           ball.el = el
           this.dropBalls.push(ball)
           console.log(this.balls)
+          console.log(this.dropBalls)
           return
         }
       }
     },
     // transition
     dropBeforeEnter (el) {
-      console.log('before-enter')
+      console.log('drop-before-enter')
       console.log(el)
       let count = this.balls.length
       while (count--) {
@@ -139,6 +141,7 @@ export default {
           el.style.display = ''
           el.style.webkitTransform = `translate3d(0, ${y}px, 0)`
           el.style.transform = `translate3d(0, ${y}px, 0)`
+          console.log(x + ':--:' + y)
 
           let inner = el.getElementsByClassName('inner-hook')[0]
           inner.style.webkitTransform = `translate3d(${x}px, 0, 0)`
@@ -148,7 +151,10 @@ export default {
     },
     dropEnter (el, done) {
       /* eslint-disable */
-      let rf = el.offsetHieght
+      console.log('dropEnter')
+      /* 触发******** */
+      let rf = el.offsetHeight
+      console.dir(el.offsetHeight)
       this.$nextTick(() => {
         el.style.display = ''
         el.style.webkitTransform = 'translate3d(0, 0, 0)'

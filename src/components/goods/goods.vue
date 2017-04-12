@@ -54,7 +54,7 @@
    		</ul>
    	</div>
    	<shopcart ref="shopCartElement" :deliveryPrice="seller.deliveryPrice" :minPrice="seller.minPrice" :selectFoods="selectFoods"></shopcart>
-    <food :food="selectedFood" ref="food"></food>
+    <food :food="selectedFood" ref="food" @addCart="addCart"></food>
   </div>
 </template>
 
@@ -119,7 +119,6 @@ export default {
  		},
  		_calculateHeight () {
  			let foodList = this.$refs.foodList
- 			console.log(foodList)
  			let height = 0
  			this.listHeight.push(height)
  			if (foodList) {
@@ -131,22 +130,22 @@ export default {
  			}
  		},
  		selectMenu (index, event) {
- 			console.log('click')
  			if (!event._constructed) {
  				return
  			}
  			let foodList = this.$refs.foodList
  			let el = foodList[index]
  			this.foodsScroll.scrollToElement(el, 100)
- 			console.log(index)
  		},
     _drop (target) {
+      console.log('再传递给子组件shopCart，触发子组件的drop方法')
       this.$refs.shopCartElement.drop(target)
     },
     addCart (target) {
       // if (!event._constructed) {
       //   return
       // }
+      console.log('执行cartcontrol中的addCart事件')
       this._drop(target)
     },
     selectFood (food, event) {
