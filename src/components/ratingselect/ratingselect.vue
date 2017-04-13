@@ -71,6 +71,7 @@ export default {
       if (!event._constructed) {
         return
       }
+      console.log('触发ratingtypeSelect')
       // this.selectType = type
       this.$emit('ratingtypeSelect', type)
     },
@@ -78,6 +79,7 @@ export default {
       if (!event._constructed) {
         return
       }
+      console.log('contentToggle')
       // this.onlyContent = !this.onlyContent
       this.$emit('contentToggle')
     }

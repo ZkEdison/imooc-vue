@@ -1,5 +1,5 @@
 <template>
-  <div class="ratings">
+  <div class="ratings" ref="ratingsEle">
     <div class="ratings-content">
       <div class="overview">
         <div class="overview-left">
@@ -27,7 +27,37 @@
         </div>
       </div>
       <split></split>
-      <ratingselect></ratingselect>
+      <ratingselect :selectType="selectType"
+                    :onlyContent="onlyContent"
+                    :desc="desc"
+                    :ratings="ratings"
+                    @ratingtypeSelect="ratingtypeChild"
+                    @contentToggle="contentToggleChild">
+      </ratingselect>
+      <div class="rating-wrapper">
+        <ul>
+          <li class="rating-item" v-for="rating in ratings">
+            <div class="avatar">
+              <img :src="rating.avatar" alt="" width="28" height="28">
+            </div>
+            <div class="content">
+              <h1 class="name">{{rating.username}}</h1>
+              <div class="star-wrapper">
+                <star :size="24" :score="rating.score"></star>
+                <span class="delivery" v-show="rating.deliveryTime">{{rating.deliveryTime}}</span>
+              </div>
+              <p class="text">{{rating.text}}</p>
+              <div class="recommend" v-show="rating.recommend && rating.recommend.length">
+                <span class="icon-thumb_up"></span>
+                <span v-for="item in rating.recommend" class="item">{{item}}</span>
+              </div>
+              <div class="time">
+                {{rating.rateTime | formatDate}}
+              </div>
+            </div>
+          </li>
+        </ul>
+      </div>
     </div>
   </div>
 </template>
@@ -36,7 +66,10 @@
 import star from './../star/star.vue'
 import split from './../split/split.vue'
 import ratingselect from './../ratingselect/ratingselect.vue'
+import {formatDate} from './../../common/js/date.js'
+import BScroll from 'better-scroll'
 
+const ERR_OK = 0
 const POSITIVE = 0
 const NEGATIVE = 1
 const ALL = 2
@@ -52,7 +85,8 @@ export default {
         all: '全部',
         positive: '推荐',
         negative: '吐槽'
-      }
+      },
+      ratings: []
     }
   },
   props: {
@@ -60,16 +94,43 @@ export default {
       type: Object
     }
   },
+  filters: {
+    formatDate (time) {
+      let date = new Date(time)
+      return formatDate(date, 'yyyy-MM-dd hh:mm')
+    }
+  },
   components: {
     star,
     split,
     ratingselect
+  },
+  created () {
+    this.$http.get('./api/ratings').then((res) => {
+      if (res.data.errnor === ERR_OK) {
+        this.ratings = res.data.data
+        this.$nextTick(() => {
+          this.scroll = new BScroll(this.$refs.ratingsEle, {
+            click: true
+          })
+        })
+      }
+    })
+  },
+  methods: {
+    ratingtypeChild (type) {
+      this.selectType = type
+    },
+    contentToggleChild () {
+      this.onlyContent = !this.onlyContent
+    }
   }
 }
 </script>
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped lang="stylus" rel="stylesheet/stylsu">
+  @import "./../../common/stylus/mixin.styl"
   .ratings
     position: absolute
     top: 0
@@ -137,4 +198,65 @@ export default {
             font-size:12px
             color:rgb(147, 153, 159)
             margin-left:15px
+    .rating-wrapper
+      padding: 0 18px
+      .rating-item
+        display:flex
+        padding:18px 0
+        border-1px(rgba(7, 17, 27, .1))
+        .avatar
+          flex: 0 0 28px
+          width: 28px
+          margin-right: 12px
+          img
+            border-radius:100%
+        .content
+          flex: 1
+          position:relative
+          .name
+            line-height:12px
+            font-size: 10px
+            color:rgb(7, 17, 27)
+            margin-bottom:4px
+          .star-wrapper
+            margin-bottom:6px
+            font-size:0
+            text-align:left
+            .star
+              display:inline-block
+              vertical-align:top
+              margin-right:6px
+            .delivery
+              display:inline-block
+              vertical-align:top
+              line-height:12px
+              font-size: 10px
+              color:rgb(7, 17, 27)
+          .text
+            margin-bottom:8px
+            line-height: 18px
+            color:rgb(7, 17, 27)
+            font-size:12px
+          .recommend
+            line-height:16px
+            .icon-thumb_up, .item
+              display:inline-block
+              margin: 0 8px 4px 0
+              font-size: 9px
+            .icon-thumb_up
+              color: rgb(0, 160, 220)
+            .item
+              padding: 0 6px
+              border:1px solid rgba(7, 17, 27, .1)
+              border-radius:1px
+              color:rgb(147, 153, 159)
+              background-color:#fff
+          .time
+            position:absolute
+            top: 0
+            right:0
+            line-height:12px
+            font-size:10px
+            color:rgb(147, 153, 159)
+
 </style>
