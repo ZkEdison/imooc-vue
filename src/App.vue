@@ -6,10 +6,10 @@
         <router-link to="/goods">商品</router-link>
       </div>
       <div class="tab-item">
-          <router-link to="/seller">商家</router-link>
+        <router-link to="/ratings">评论</router-link>
       </div>
       <div class="tab-item">
-          <router-link to="/ratings">评论</router-link>
+        <router-link to="/seller">商家</router-link>
       </div>
     </div>
     <div class="main-content">
@@ -48,7 +48,7 @@ export default {
 </script>
 
 <style lang="stylus" rel="stylesheet/stylus">
-  
+
   .tab
     display: flex
     width: 100%
