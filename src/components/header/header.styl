@@ -2,7 +2,7 @@
 
 .header
 	color: #fff
-	background-color:rgba(7,17,27,0.5)
+	background-color:rgba(7, 17, 27, .5)
 	position: relative
 	.content-wapper
 		padding: 24px 12px 18px 24px
@@ -20,7 +20,7 @@
 			margin-left: 16px
 			font-size: 14px
 			.title
-				margin: 2px 0 8px 0
+				margin: 2px 0 8px
 				padding-left:34px
 				font-size: 16px
 				bg-image('./brand')
@@ -62,20 +62,20 @@
 			height: 24px
 			line-height: 24px
 			border-radius: 14px
-			background: rgba(0,0,0,0.2)
+			background: rgba(0, 0, 0, .2)
 			text-align: center
 			.count
 				font-size: 12px
-				color: rgb(255,255,255)
+				color: rgb(255, 255, 255)
 			i
 				font-size: 12px
 	.bulletin-wrapper
 		height: 28px
 		font-size: 12px
 		line-height: 28px
-		color: rgb(255,255,255)
+		color: rgb(255, 255, 255)
 		bg-image('bulletin')
-		background-color: rgba(7,17,27,0.2)
+		background-color: rgba(7, 17, 27, .2)
 		background-repeat: no-repeat
 		background-position: 5px center
 		background-size: auto 18px
@@ -110,22 +110,22 @@
 
 .detail
 	position: fixed
-	z-index: 100
+	z-index: 999
 	top: 0
 	left: 0
 	bottom: 0
 	right: 0
-	background: rgba(7,17,27,0.8)
+	background: rgba(7, 17, 27, .8)
 	overflow-y:auto
 	display: flex
 	flex-flow: column
 	font-size:0
 	&.fade-enter , &.fade-leave-active
 		opacity: 0
-		background: rgba(7,17,27,0)
+		background: rgb(7, 17, 27)
 	&.fade-enter-active , &.fade-leave-active
 		transition: all .3s
-		background: rgba(7,17,27,0.8)
+		background: rgba(7, 17, 27, .8)
 	.detail-wrapper
 		flex:1
 		color: #fff
@@ -140,13 +140,13 @@
 				margin-bottom: 16px
 			.title
 				width: 80%
-				margin: 30px auto 24px auto
+				margin: 30px auto 24px
 				display:flex
 				.line
 					flex:1
 					position:relative
 					top:-6px
-					border-bottom: 1px solid rgb(255,255,255,0.2)
+					border-bottom: 1px solid rgba(255, 255, 255, .2)
 				.text
 					font-size: 14px
 					padding: 0 12px
@@ -179,7 +179,7 @@
 							bg-image('special_2')
 					.text
 						font-size: 12px
-						color:rgb(255,255,255)
+						color:rgb(255, 255, 255)
 						line-height: 16px
 			.bulletin
 				margin: 0 auto
