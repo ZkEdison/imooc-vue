@@ -13,13 +13,17 @@
       </div>
     </div>
     <div class="main-content">
-      <router-view :seller="seller"></router-view>
+      <keep-alive>
+        <router-view :seller="seller" ></router-view>
+      </keep-alive>
+
     </div>
   </div>
 </template>
 
 <script>
 import header from './components/header/header.vue'
+import {urlParse} from './common/js/util.js'
 
 const ERR_OK = 0
 
@@ -27,14 +31,21 @@ export default {
   name: 'app',
   data () {
     return {
-      seller: {}
+      seller: {
+        id: (() => {
+          let queryParam = urlParse()
+          console.log(queryParam)
+          return queryParam.id
+        })()
+      }
     }
   },
   created () {
-    this.$http.get('/api/seller')
+    this.$http.get('/api/seller?' + this.seller.id)
           .then((res) => {
             if (res.data.errnor === ERR_OK) {
-              this.seller = res.data.data
+              this.seller = Object.assign({}, this.seller, res.data.data)
+              console.log(this.seller)
             }
           })
           .catch((error) => {
