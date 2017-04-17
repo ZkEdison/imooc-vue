@@ -107,7 +107,7 @@ export default {
     ratingselect
   },
   created () {
-    this.ratinngs = dataJson.ratings
+    this.ratings = dataJson.ratings
     this.$nextTick(() => {
       this.scroll = new BScroll(this.$refs.ratingsEle, {
         click: true
