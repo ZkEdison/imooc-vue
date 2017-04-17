@@ -68,8 +68,9 @@ import split from './../split/split.vue'
 import ratingselect from './../ratingselect/ratingselect.vue'
 import {formatDate} from './../../common/js/date.js'
 import BScroll from 'better-scroll'
+import dataJson from './../../../data.json'
 
-const ERR_OK = 0
+// const ERR_OK = 0
 const POSITIVE = 0
 const NEGATIVE = 1
 const ALL = 2
@@ -106,16 +107,22 @@ export default {
     ratingselect
   },
   created () {
-    this.$http.get('./api/ratings').then((res) => {
-      if (res.data.errnor === ERR_OK) {
-        this.ratings = res.data.data
-        this.$nextTick(() => {
-          this.scroll = new BScroll(this.$refs.ratingsEle, {
-            click: true
-          })
-        })
-      }
+    this.ratinngs = dataJson.ratings
+    this.$nextTick(() => {
+      this.scroll = new BScroll(this.$refs.ratingsEle, {
+        click: true
+      })
     })
+    // this.$http.get('./api/ratings').then((res) => {
+    //   if (res.data.errnor === ERR_OK) {
+    //     this.ratings = res.data.data
+    //     this.$nextTick(() => {
+    //       this.scroll = new BScroll(this.$refs.ratingsEle, {
+    //         click: true
+    //       })
+    //     })
+    //   }
+    // })
   },
   computed: {
   },

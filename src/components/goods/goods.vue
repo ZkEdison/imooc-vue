@@ -63,8 +63,9 @@ import BScroll from 'better-scroll'
 import shopcart from '../shopcart/shopcart'
 import cartcontrol from './../cartcontr/cartcontrol'
 import food from './../food/food.vue'
+import dataJson from './../../../data.json'
 
-const ERR_OK = 0
+// const ERR_OK = 0
 export default {
   name: 'goods',
   props: {
@@ -86,19 +87,24 @@ export default {
     }
   },
   created () {
-    this.$http.get('/api/goods')
-     .then((res) => {
-       if (res.data.errnor === ERR_OK) {
-         this.goods = res.data.data
-         this.$nextTick(() => {
-         	this._initScroll()
-         	this._calculateHeight()
-         })
-       }
-     })
-     .catch((error) => {
-       console.log(error)
-     })
+    this.goods = dataJson.goods
+    this.$nextTick(() => {
+      this._initScroll()
+      this._calculateHeight()
+    })
+    // this.$http.get('/api/goods')
+    //  .then((res) => {
+    //    if (res.data.errnor === ERR_OK) {
+    //      this.goods = res.data.data
+    //      this.$nextTick(() => {
+    //      	this._initScroll()
+    //      	this._calculateHeight()
+    //      })
+    //    }
+    //  })
+    //  .catch((error) => {
+    //    console.log(error)
+    //  })
     this.classMap = ['decrease', 'discount', 'guarantee', 'invoice', 'special']
   },
   watch: {

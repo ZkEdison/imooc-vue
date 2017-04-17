@@ -13,44 +13,36 @@
       </div>
     </div>
     <div class="main-content">
-      <keep-alive>
-        <router-view :seller="seller" ></router-view>
-      </keep-alive>
-
+      <router-view :seller="seller"></router-view>
     </div>
   </div>
 </template>
 
 <script>
 import header from './components/header/header.vue'
-import {urlParse} from './common/js/util.js'
+import dataJson from './../data.json'
 
-const ERR_OK = 0
+// const ERR_OK = 0
 
 export default {
   name: 'app',
   data () {
     return {
-      seller: {
-        id: (() => {
-          let queryParam = urlParse()
-          console.log(queryParam)
-          return queryParam.id
-        })()
-      }
+      seller: {}
     }
   },
   created () {
-    this.$http.get('/api/seller?' + this.seller.id)
-          .then((res) => {
-            if (res.data.errnor === ERR_OK) {
-              this.seller = Object.assign({}, this.seller, res.data.data)
-              console.log(this.seller)
-            }
-          })
-          .catch((error) => {
-            console.log(error)
-          })
+    // this.$http.get('/api/seller')
+    //       .then((res) => {
+    //         if (res.data.errnor === ERR_OK) {
+    //           this.seller = res.data.data
+    //         }
+    //       })
+    //       .catch((error) => {
+    //         console.log(error)
+    //       })
+    this.seller = dataJson.seller
+    console.log(this.seller)
   },
   components: {
     'v-header': header
